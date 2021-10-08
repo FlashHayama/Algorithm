@@ -3,7 +3,7 @@ class OrientedGraph:
     def __init__(self, head, succ):
         self.hsucc = head
         self.succ = succ
-        self.hpred = [0]
+        self.hpred = []
         self.pred = []
         self.inDeg = self.write_inDeg()
 
@@ -15,9 +15,19 @@ class OrientedGraph:
             inDeg[s] += 1
         
         return inDeg
+
+    def write_outDeg(self):
+        if len(self.hpred <= 0):
+            return
+        outDeg = [0] * len(self.hpred)
+        for p in self.pred:
+            outDeg[p] += 1
+
+        return outDeg
     
     def find_pred(self):
         #Conversion des liste successeur en liste predecesseur
+        self.hpred = [0]
         tempH = []
         tempPred = [0] * sum(self.inDeg)
         
@@ -51,7 +61,21 @@ class OrientedGraph:
         return newSummits
 
     def put_graph_in_level(self):
-        pass
+        level = self.get_graph_put_in_level()
+        tempHead = []
+        tempSucc = []
+        iteration = 0
+
+        for l in range(len(level)):
+            tempHead.append(iteration)
+            for s in range(self.hsucc[level[l]], self.hsucc[level[l] + 1]):
+                tempSucc.append(level[self.succ[s]])
+                iteration += 1
+        tempHead.append(iteration)
+        self.hsucc = tempHead
+        self.succ = tempSucc
+        self.inDeg = self.write_inDeg()
+        self.find_pred()
 
     def search_bfs(self,summit):
         #Recherche en largeur des sommets accessible via <<summit>>, File
@@ -108,6 +132,9 @@ class OrientedGraph:
 g = OrientedGraph([0,2,2,4,7,8,8,9,11],[1,7,1,6,2,4,5,5,5,2,6])
 g.find_pred()
 print(g)
-print(g.search_bfs(0))
-print(g.search_dfs(0))
-print(g.get_graph_put_in_level())
+#print(g.search_bfs(0))
+#print(g.search_dfs(0))
+#print(g.get_graph_put_in_level())
+g.put_graph_in_level()
+print("-----------------------\nAprès une mise à niveau:\n-----------------------")
+print(g)
