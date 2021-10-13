@@ -91,6 +91,23 @@ class SearchBinaryTree(BinaryTree):
     def __str__(self):
         pass
 
+class AVL(SearchBinaryTree):
+    def __init__(self,root = Node()):
+        super().__init__(root)
+
+    def append(self,data):
+        pass
+
+    def remove(self,data):
+        pass
+
+    def search_data(self, data):
+        return super().search_data(data)
+
+    def print_tree(self, tree):
+        super().print_tree(tree)
+
+
 btree = SearchBinaryTree()
 
 btree.append(56),btree.append(40),btree.append(100),btree.append(2)
