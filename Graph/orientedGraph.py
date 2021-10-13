@@ -6,6 +6,7 @@ class OrientedGraph:
         self.hpred = []
         self.pred = []
         self.inDeg = self.write_inDeg()
+        self.outDeg = []
 
     def write_inDeg(self):
         #Recherche du nombre de predecesseur par noeud
@@ -17,7 +18,7 @@ class OrientedGraph:
         return inDeg
 
     def write_outDeg(self):
-        if len(self.hpred <= 0):
+        if len(self.hpred) <= 0:
             return
         outDeg = [0] * len(self.hpred)
         for p in self.pred:
@@ -40,6 +41,7 @@ class OrientedGraph:
                 tempH[self.succ[s]] -= 1
                 tempPred[tempH[self.succ[s]]] = h
         self.pred = tempPred
+        self.outDeg = self.write_outDeg()
 
     def get_graph_put_in_level(self):
         # retourne une liste avec les sommets mis a niveau
@@ -127,6 +129,7 @@ class OrientedGraph:
         string += "\nHEAD PRED\t : " + str(self.hpred)
         string += "\nPredecessor\t : " + str(self.pred)
         string += "\nd-()\t\t : " + str(self.inDeg)
+        string += "\nd+()\t\t : " + str(self.outDeg)
         return string
 
 g = OrientedGraph([0,2,2,4,7,8,8,9,11],[1,7,1,6,2,4,5,5,5,2,6])
