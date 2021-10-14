@@ -16,7 +16,7 @@ class OrientedGraph:
         
         return inDeg
 
-    def write_outDeg(self):
+    def write_outDeg(self) -> list[int]:
         if len(self.hpred <= 0):
             return
         outDeg = [0] * len(self.hpred)
@@ -41,7 +41,7 @@ class OrientedGraph:
                 tempPred[tempH[self.succ[s]]] = h
         self.pred = tempPred
 
-    def get_graph_put_in_level(self):
+    def get_graph_put_in_level(self) -> list[int]:
         # retourne une liste avec les sommets mis a niveau
         inDeg = self.inDeg[:]
         newSummits = []
@@ -77,7 +77,7 @@ class OrientedGraph:
         self.inDeg = self.write_inDeg()
         self.find_pred()
 
-    def search_bfs(self,summit):
+    def search_bfs(self,summit) -> list[int]:
         #Recherche en largeur des sommets accessible via <<summit>>, File
         if (len(self.hsucc) <= summit):     #\
             print("Summit is not exist")    # Voie si le sommet exist. Si non arrête 
@@ -97,7 +97,7 @@ class OrientedGraph:
                     sSummits.append(y)
         return sSummits
 
-    def search_dfs(self,summit):
+    def search_dfs(self,summit) -> list[int]:
         #Recherche en profondeur des sommets accessible via <<summit>>, Pile
         if (len(self.hsucc) <= summit):     #\
             print("Summit is not exist")    # Voie si le sommet exist. Si non arrête 
@@ -121,6 +121,47 @@ class OrientedGraph:
                     sSummits.append(y)
         return sSummits
 
+    def search_src(self):
+        #Strongly related components
+        #Recherche des composant fortement connexes
+        P = []
+        Q = []
+        dfn = [0] * len(self.hsucc)
+        low = [0] * len(self.hsucc)
+        scc = [0] * len(self.hsucc)
+        nscc = 0
+        count = 0
+        for s in range(len(self.hsucc)):
+            if dfn[s] == 0:
+                count += 1
+                dfn[s] = count
+                low[s] = count
+                next = self.hsucc[:]
+                P.append(s)
+                Q.append(s)
+                while len(Q) > 0:
+                    x = Q[-1]
+                    if next[x] == self.hsucc[x+1]:
+                        if low[x] == dfn[x]:
+                            nscc += 1
+                            while len(P) - 1 == x:
+                                P.pop()
+                                scc[len(P)-1] = nscc
+                        Q.pop()
+                        if len(Q) > 0:
+                            low[Q[-1]] = min(low[Q[-1]], low[x])
+                    else:
+                        y = self.succ[next[x]]
+                        next[x] = next[x] + 1
+                        if dfn[y] == 0:
+                            count += 1
+                            dfn[y] = count
+                            low[y] = count
+                            P.append(y)
+                            Q.append(y)
+                        elif dfn[y] < dfn[x] and y in P:
+                            low[x] = min(low[x],dfn[y])
+            
     def __str__(self) -> str:
         string = "HEAD SUCC\t : " + str(self.hsucc)
         string += "\nSuccessor\t : " + str(self.succ)
@@ -129,7 +170,11 @@ class OrientedGraph:
         string += "\nd-()\t\t : " + str(self.inDeg)
         return string
 
-g = OrientedGraph([0,2,2,4,7,8,8,9,11],[1,7,1,6,2,4,5,5,5,2,6])
+class ValuedOrientedGraph(OrientedGraph):
+    def __init__(self,head, succ):
+        super().__init__(head, succ)
+
+g = ValuedOrientedGraph([0,2,2,4,7,8,8,9,11],[1,7,1,6,2,4,5,5,5,2,6])
 g.find_pred()
 print(g)
 #print(g.search_bfs(0))
@@ -138,3 +183,4 @@ print(g)
 g.put_graph_in_level()
 print("-----------------------\nAprès une mise à niveau:\n-----------------------")
 print(g)
+g.search_src()
