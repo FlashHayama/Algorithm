@@ -96,7 +96,10 @@ class AVL(SearchBinaryTree):
         super().__init__(root)
 
     def append(self,data):
-        pass
+        def append(data,root):
+            
+            pass
+        append(data,self.root)
 
     def remove(self,data):
         pass
