@@ -103,8 +103,12 @@ class SearchBinaryTree(BinaryTree):
         pass
 
 class AVL(SearchBinaryTree):
-    def __init__(self,root = Node()):
+    def __init__(self,root = NodeAVL()):
         super().__init__(root)
+
+    def calcul_balance(self,tree):
+        tree.balance = self.get_tree_height(tree.right) - self.get_tree_height(tree.left)
+        return tree.balance
 
     def append(self,data):
         def append(data,root):
@@ -123,6 +127,7 @@ class AVL(SearchBinaryTree):
 
 
 btree = SearchBinaryTree()
+#btree = AVL()
 
 btree.append(56),btree.append(40),btree.append(100),btree.append(2)
 btree.append(80),btree.append(34),btree.append(23),btree.append(200)
