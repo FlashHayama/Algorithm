@@ -4,6 +4,11 @@ class Node:
         self.left = left
         self.right = right
 
+class NodeAVL(Node):
+    def __init__(self, data=None, left=None, right=None, balance = 0):
+        super().__init__(data=data, left=left, right=right)
+        self.balance = balance
+
 class BinaryTree:
     def __init__(self):
         pass
@@ -11,6 +16,12 @@ class BinaryTree:
 class SearchBinaryTree(BinaryTree):
     def __init__(self,root = Node()):
         self.root = root
+
+    def get_tree_height(self, root):
+        if root.data is None:
+            return 0
+        else:
+            return 1 + max(self.get_tree_height(root.left), self.get_tree_height(root.right))
     
     def append(self,data):
         def append(data,tree):
@@ -117,8 +128,10 @@ btree.append(56),btree.append(40),btree.append(100),btree.append(2)
 btree.append(80),btree.append(34),btree.append(23),btree.append(200)
 btree.append(70),btree.append(68),btree.append(69),btree.append(65)
 btree.print_tree(btree.root)
-btree.search_data(2),btree.search_data(80),btree.search_data(24)
+#btree.search_data(2),btree.search_data(80),btree.search_data(24)
 
-btree.remove(80)
-btree.print_tree(btree.root)
-btree.search_data(80)
+print(btree.get_tree_height(btree.root))
+
+#btree.remove(80)
+#btree.print_tree(btree.root)
+#btree.search_data(80)
