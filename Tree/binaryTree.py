@@ -111,10 +111,44 @@ class AVL(SearchBinaryTree):
         return tree.balance
 
     def append(self,data):
-        def append(data,root):
-            
-            pass
+        def append(data,tree):
+            if tree.data is None:
+                print("Data " + str(data) + " insert\n")
+                tree.data = data
+                tree.left = NodeAVL()
+                tree.right = NodeAVL()
+            elif tree.data == data:
+                print("Data is already in tree")
+            elif tree.data < data:
+                print("Go right")
+                append(data,tree.right)
+                self.test_balance(tree)
+            elif tree.data > data:
+                print("Go left")
+                append(data,tree.left)
+                self.test_balance(tree)
         append(data,self.root)
+    
+    def test_balance(self,tree):
+        balance = self.calcul_balance(tree)
+        if balance < -1:
+            pass
+        elif balance < -1:
+            pass
+        elif balance > 1:
+            pass
+        else:
+            pass 
+        pass
+
+    def left_rotate(self,tree):
+        pass
+    def right_rotate(self,tree):
+        pass
+    def double_left_rotate(self,tree):
+        pass
+    def double_right_rotate(self,tree):
+        pass
 
     def remove(self,data):
         pass
