@@ -137,9 +137,10 @@ class AVL(SearchBinaryTree):
             pass
         elif balance > 1:
             pass
-        else:
+        elif balance > 1:
             pass 
-        pass
+        else:
+            pass
 
     def left_rotate(self,tree):
         pass
