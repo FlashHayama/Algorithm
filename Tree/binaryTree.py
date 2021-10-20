@@ -134,9 +134,9 @@ class AVL(SearchBinaryTree):
             if tree.data is None:
                 print("Data " + str(data) + " insert\n")
                 tree.data = data
-                tree.height = 1
                 tree.left = NodeAVL()
                 tree.right = NodeAVL()
+                self.balance(tree)
             elif tree.data == data:
                 print("Data is already in tree")
             elif tree.data < data:
@@ -159,7 +159,8 @@ class AVL(SearchBinaryTree):
             self.right_rotate(tree)
         elif bal == -2 and balLeft > 0:
             self.double_right_rotate(tree)
-        self.calcul_height(tree)
+        else:
+            self.calcul_height(tree)
 
     def left_rotate(self,tree):
         tempRight = tree.right
@@ -214,15 +215,17 @@ class AVL(SearchBinaryTree):
 #btree = SearchBinaryTree()
 btree = AVL()
 
-btree.append(56),btree.append(40),btree.append(100),btree.append(2)
-btree.append(80),btree.append(34),btree.append(23),btree.append(200)
+btree.append(56),btree.append(40),btree.append(99),btree.append(2)
+btree.append(80),btree.append(34),btree.append(23),btree.append(100)
 btree.append(70),btree.append(68),btree.append(69),btree.append(65)
-btree.append(76),btree.append(75),btree.append(78),btree.append(1),btree.append(3),btree.append(10)
+btree.append(76),btree.append(75),btree.append(78),btree.append(1)
+btree.append(3),btree.append(10)
 btree.print_tree(btree.root)
-#btree.search_data(2),btree.search_data(80),btree.search_data(24)
+btree.search_data(2),btree.search_data(80),btree.search_data(24)
 
 print(btree.get_tree_height(btree.root))
 print(btree.calcul_balancing(btree.root))
+print(btree.root.left.height,btree.root.right.height)
 
 #btree.remove(80)
 #btree.print_tree(btree.root)
