@@ -13,12 +13,12 @@ print("\n")
 
 print(btree.get_tree_height(btree.root))
 print(btree.calcul_balancing(btree.root))
-print(btree.root.left.height,btree.root.right.height)
+print(btree.get_tree_height(btree.root.left),btree.get_tree_height(btree.root.right))
 
-btree.remove(56,34,23,100,70,68,10,1)
+btree.remove(56)
 
 btree.print_tree(btree.root)
 print("\n")
 print(btree.get_tree_height(btree.root))
 print(btree.calcul_balancing(btree.root))
-print(btree.root.left.height,btree.root.right.height)
+print(btree.get_tree_height(btree.root.left),btree.get_tree_height(btree.root.right))

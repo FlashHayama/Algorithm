@@ -5,7 +5,7 @@ class Node:
         self.right = right
 
 class SearchBinaryTree:
-    def __init__(self,root = Node()):
+    def __init__(self,root = None):
         self.root = root
 
     def get_tree_height(self, root):
@@ -84,7 +84,7 @@ class SearchBinaryTree:
         search_data(data,self.root)
 
     def print_tree(self,tree):
-        if tree.data is None:
+        if tree is None:
             return
         else:
             self.print_tree(tree.left)
