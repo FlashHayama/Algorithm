@@ -44,7 +44,7 @@ class AVL(SearchBinaryTree):
                 print(str(data) + " is not a integer")
     
     def balance(self,tree):
-        if tree is None and tree is None: return tree
+        if tree is None: return tree
         bal = self.calcul_balancing(tree)
         balRight = self.calcul_balancing(tree.right)
         balLeft = self.calcul_balancing(tree.left)
@@ -93,14 +93,13 @@ class AVL(SearchBinaryTree):
         tree.left = self.left_rotate(tree.left)
         return self.right_rotate(tree)
 
-    def remove(self,*datas):
-        def remove(data,tree):
+    def remove_one(self,data,tree):
             if tree is None:
                 print("Data " + str(data) + " is not in tree")
             elif data < tree.data:
-                tree.left = remove(data,tree.left)
+                tree.left = self.remove_one(data,tree.left)
             elif data > tree.data:
-                tree.right = remove(data,tree.right)
+                tree.right = self.remove_one(data,tree.right)
             else:
                 tree = self.remove_root(tree)
 
@@ -108,19 +107,19 @@ class AVL(SearchBinaryTree):
             tree = self.balance(tree)
 
             return tree
+
+    def remove(self,*datas):
         for data in datas:
             if isinstance(data, int):
-                self.root = remove(data,self.root)
+                self.root = self.remove_one(data,self.root)
             else:
                 print(str(data) + " is not a integer")
 
-    def remove_min(self,tree):
+    def get_min(self,tree):
         if tree.left is None:
-            min = tree.data
-            tree = self.remove_root(tree)
+            min = tree
         else:
-            min = self.remove_min(tree.left)
-            self.calcul_height(tree)
+            min = self.get_min(tree.left)
         return min
 
     def remove_root(self,tree):
@@ -135,8 +134,11 @@ class AVL(SearchBinaryTree):
             tree = None
             return temp
         else:
-            tree.data = self.remove_min(tree.right)
+            min = self.get_min(tree.right)
+            tree.data = min.data
+            tree.right = self.remove_one(min.data,tree.right)
             self.calcul_height(tree)
+            return tree
 
     def search_data(self, data):
         return super().search_data(data)
