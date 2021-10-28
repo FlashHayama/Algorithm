@@ -1,11 +1,11 @@
-from binarySearchTree import SearchBinaryTree,Node
+from binarySearchTree import *
 
 class NodeAVL(Node):
     def __init__(self, data=None, left=None, right=None, balance = 0, height = 0):
         super().__init__(data=data, left=left, right=right)
         self.height = height
 
-class AVL(SearchBinaryTree):
+class AVL(BinarySearchTree):
     def __init__(self,root = None):
         super().__init__(root)
 
@@ -126,11 +126,9 @@ class AVL(SearchBinaryTree):
         if tree.left is None and tree.right is None:
             tree = None
         elif tree.left is None:
-            temp = tree.right
-            tree = temp
+            tree = tree.right
         elif tree.right is None:
-            temp = tree.left
-            tree = temp
+            tree = tree.left
         else:
             min = self.get_min(tree.right)
             tree.data = min.data
@@ -139,13 +137,13 @@ class AVL(SearchBinaryTree):
             
         return tree
 
-    def search_data(self, data) -> NodeAVL:
+    def search_data(self, data) -> bool:
         return super().search_data(data)
 
-    def print_tree(self, tree) -> None:
-        if tree is None:
-            return
-        else:
-            self.print_tree(tree.left)
-            print(str(tree.data) + ":h" + str(tree.height) , end=" ")
-            self.print_tree(tree.right)
+    def print_tree(self, tree) -> str:
+        return super().print_tree(tree)
+
+    def __str__(self) -> str:
+        string = super().__str__()
+        string += "Balance :\t" + str(self.calcul_balancing(self.root))
+        return string
