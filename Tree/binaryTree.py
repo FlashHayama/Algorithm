@@ -15,7 +15,7 @@ print(btree.get_tree_height(btree.root))
 print(btree.calcul_balancing(btree.root))
 print(btree.get_tree_height(btree.root.left),btree.get_tree_height(btree.root.right))
 
-btree.remove(56,10,69,75,78,80)
+btree.remove(56,10,69,75,78,80,100,76)
 
 btree.print_tree(btree.root)
 print("\n")

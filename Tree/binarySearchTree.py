@@ -14,23 +14,22 @@ class SearchBinaryTree:
         else:
             return 1 + max(self.get_tree_height(root.left), self.get_tree_height(root.right))
     
-    def append(self,*datas):
+    def append(self,*datas) -> Node:
         def append(data,tree):
-            if tree.data is None:
-                print("Data " + str(data) + " insert\n")
-                tree.data = data
-                tree.left = Node()
-                tree.right = Node()
+            if tree is None:
+                return Node(data=data)
             elif tree.data == data:
                 print("Data is already in tree")
+                return tree
             elif tree.data < data:
-                print("Go right")
-                append(data,tree.right)
+                tree.right = append(data,tree.right)
             elif tree.data > data:
-                print("Go left")
-                append(data,tree.left)
+                tree.left = append(data,tree.left)
         for data in datas:
-            append(data,self.root)
+            if isinstance(data, int):
+                self.root = append(data,self.root)
+            else:
+                print("Data " + str(data) + " is not a int")
 
     def remove_min(self,tree):
         if tree.left.data is None:
