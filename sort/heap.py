@@ -1,27 +1,33 @@
 class Heap:
-    def __init__(self, tab = []):
-        self.tab = tab
+    def get_max(tab):
+        if len(tab) > 0:
+            return tab[0]
 
-    def get_max(self):
+    def get_min(tab):
+        if len(tab) > 0:
+            min = tab[0]
+            for data in range(len(tab)//2,len(tab)):
+                if(data < min):
+                    min = data
+            return min
+
+    def heapify(tab, i):
         pass
 
-    def get_min(self):
+    def delete(data):
         pass
 
-    def delete(self,data):
+    def append(data):
         pass
 
-    def append(self,data):
+    def create_heap_with_insert():
         pass
 
-    def create_heap_with_insert(self):
+    def create_heap():
         pass
 
-    def create_heap(self):
+    def sort(withInsert = False):
         pass
 
-    def sort(self,withInsert = False):
-        pass
-
-    def __str__(self):
+    def __str__(tab):
         pass
