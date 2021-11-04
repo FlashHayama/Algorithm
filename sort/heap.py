@@ -6,24 +6,24 @@ class Heap:
     def get_min(tab):
         if len(tab) > 0:
             min = tab[0]
-            for data in range(len(tab)//2,len(tab)):
-                if(data < min):
-                    min = data
+            for index in range(len(tab)//2,len(tab),1):
+                if(tab[index] < min):
+                    min = tab[index]
             return min
 
     def heapify(tab, i):
         pass
 
-    def delete(data):
+    def delete(tab,*datas):
         pass
 
-    def append(data):
+    def append(tab,*datas):
         pass
 
-    def create_heap_with_insert():
+    def create_heap_with_insert(tab):
         pass
 
-    def create_heap():
+    def create_heap(tab):
         pass
 
     def sort(withInsert = False):
@@ -31,3 +31,9 @@ class Heap:
 
     def __str__(tab):
         pass
+
+#89,45,70,23,40,69,54,20,19,37,32,21,10,4,7,2,3,1
+tab = [89,45,70,23,19,69,54,20,21]
+
+print(Heap.get_max(tab))
+print(Heap.get_min(tab))
