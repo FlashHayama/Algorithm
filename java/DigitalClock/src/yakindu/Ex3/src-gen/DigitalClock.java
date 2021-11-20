@@ -9,6 +9,9 @@ public class DigitalClock implements IStatemachine {
 		MAIN_REGION_DISPLAYHOUR,
 		MAIN_REGION_DISPLAYSECOND,
 		MAIN_REGION_DISPLAYDATE,
+		MAIN_REGION_SETHOUR,
+		MAIN_REGION_SETSECONDS,
+		MAIN_REGION_SETDATE,
 		$NULLSTATE$
 	};
 	
@@ -83,6 +86,7 @@ public class DigitalClock implements IStatemachine {
 	}
 	private void clearInEvents() {
 		b1 = false;
+		b2 = false;
 	}
 	
 	private void microStep() {
@@ -95,6 +99,15 @@ public class DigitalClock implements IStatemachine {
 			break;
 		case MAIN_REGION_DISPLAYDATE:
 			main_region_DisplayDate_react(-1);
+			break;
+		case MAIN_REGION_SETHOUR:
+			main_region_SetHour_react(-1);
+			break;
+		case MAIN_REGION_SETSECONDS:
+			main_region_SetSeconds_react(-1);
+			break;
+		case MAIN_REGION_SETDATE:
+			main_region_SetDate_react(-1);
 			break;
 		default:
 			break;
@@ -116,7 +129,7 @@ public class DigitalClock implements IStatemachine {
 			clearInEvents();
 			
 			nextEvent();
-		} while (b1);
+		} while ((b1 || b2));
 		
 		isExecuting = false;
 	}
@@ -139,6 +152,12 @@ public class DigitalClock implements IStatemachine {
 			return stateVector[0] == State.MAIN_REGION_DISPLAYSECOND;
 		case MAIN_REGION_DISPLAYDATE:
 			return stateVector[0] == State.MAIN_REGION_DISPLAYDATE;
+		case MAIN_REGION_SETHOUR:
+			return stateVector[0] == State.MAIN_REGION_SETHOUR;
+		case MAIN_REGION_SETSECONDS:
+			return stateVector[0] == State.MAIN_REGION_SETSECONDS;
+		case MAIN_REGION_SETDATE:
+			return stateVector[0] == State.MAIN_REGION_SETDATE;
 		default:
 			return false;
 		}
@@ -151,6 +170,16 @@ public class DigitalClock implements IStatemachine {
 	public void raiseB1() {
 		inEventQueue.add(() -> {
 			b1 = true;
+		});
+		runCycle();
+	}
+	
+	private boolean b2;
+	
+	
+	public void raiseB2() {
+		inEventQueue.add(() -> {
+			b2 = true;
 		});
 		runCycle();
 	}
@@ -220,6 +249,21 @@ public class DigitalClock implements IStatemachine {
 		stateVector[0] = State.MAIN_REGION_DISPLAYDATE;
 	}
 	
+	/* 'default' enter sequence for state SetHour */
+	private void enterSequence_main_region_SetHour_default() {
+		stateVector[0] = State.MAIN_REGION_SETHOUR;
+	}
+	
+	/* 'default' enter sequence for state SetSeconds */
+	private void enterSequence_main_region_SetSeconds_default() {
+		stateVector[0] = State.MAIN_REGION_SETSECONDS;
+	}
+	
+	/* 'default' enter sequence for state SetDate */
+	private void enterSequence_main_region_SetDate_default() {
+		stateVector[0] = State.MAIN_REGION_SETDATE;
+	}
+	
 	/* 'default' enter sequence for region main region */
 	private void enterSequence_main_region_default() {
 		react_main_region__entry_Default();
@@ -240,6 +284,21 @@ public class DigitalClock implements IStatemachine {
 		stateVector[0] = State.$NULLSTATE$;
 	}
 	
+	/* Default exit sequence for state SetHour */
+	private void exitSequence_main_region_SetHour() {
+		stateVector[0] = State.$NULLSTATE$;
+	}
+	
+	/* Default exit sequence for state SetSeconds */
+	private void exitSequence_main_region_SetSeconds() {
+		stateVector[0] = State.$NULLSTATE$;
+	}
+	
+	/* Default exit sequence for state SetDate */
+	private void exitSequence_main_region_SetDate() {
+		stateVector[0] = State.$NULLSTATE$;
+	}
+	
 	/* Default exit sequence for region main region */
 	private void exitSequence_main_region() {
 		switch (stateVector[0]) {
@@ -251,6 +310,15 @@ public class DigitalClock implements IStatemachine {
 			break;
 		case MAIN_REGION_DISPLAYDATE:
 			exitSequence_main_region_DisplayDate();
+			break;
+		case MAIN_REGION_SETHOUR:
+			exitSequence_main_region_SetHour();
+			break;
+		case MAIN_REGION_SETSECONDS:
+			exitSequence_main_region_SetSeconds();
+			break;
+		case MAIN_REGION_SETDATE:
+			exitSequence_main_region_SetDate();
 			break;
 		default:
 			break;
@@ -276,6 +344,14 @@ public class DigitalClock implements IStatemachine {
 				react(0);
 				
 				transitioned_after = 0;
+			} else {
+				if (b2) {
+					exitSequence_main_region_DisplayHour();
+					enterSequence_main_region_DisplaySecond_default();
+					react(0);
+					
+					transitioned_after = 0;
+				}
 			}
 		}
 		/* If no transition was taken then execute local reactions */
@@ -295,6 +371,14 @@ public class DigitalClock implements IStatemachine {
 				react(0);
 				
 				transitioned_after = 0;
+			} else {
+				if (b2) {
+					exitSequence_main_region_DisplaySecond();
+					enterSequence_main_region_DisplayDate_default();
+					react(0);
+					
+					transitioned_after = 0;
+				}
 			}
 		}
 		/* If no transition was taken then execute local reactions */
@@ -314,6 +398,95 @@ public class DigitalClock implements IStatemachine {
 				react(0);
 				
 				transitioned_after = 0;
+			} else {
+				if (b2) {
+					exitSequence_main_region_DisplayDate();
+					enterSequence_main_region_DisplayHour_default();
+					react(0);
+					
+					transitioned_after = 0;
+				}
+			}
+		}
+		/* If no transition was taken then execute local reactions */
+		if (transitioned_after==transitioned_before) {
+			transitioned_after = react(transitioned_before);
+		}
+		return transitioned_after;
+	}
+	
+	private long main_region_SetHour_react(long transitioned_before) {
+		long transitioned_after = transitioned_before;
+		
+		if (transitioned_after<0) {
+			if (b1) {
+				exitSequence_main_region_SetHour();
+				enterSequence_main_region_DisplayHour_default();
+				react(0);
+				
+				transitioned_after = 0;
+			} else {
+				if (b2) {
+					exitSequence_main_region_SetHour();
+					enterSequence_main_region_SetSeconds_default();
+					react(0);
+					
+					transitioned_after = 0;
+				}
+			}
+		}
+		/* If no transition was taken then execute local reactions */
+		if (transitioned_after==transitioned_before) {
+			transitioned_after = react(transitioned_before);
+		}
+		return transitioned_after;
+	}
+	
+	private long main_region_SetSeconds_react(long transitioned_before) {
+		long transitioned_after = transitioned_before;
+		
+		if (transitioned_after<0) {
+			if (b1) {
+				exitSequence_main_region_SetSeconds();
+				enterSequence_main_region_SetHour_default();
+				react(0);
+				
+				transitioned_after = 0;
+			} else {
+				if (b2) {
+					exitSequence_main_region_SetSeconds();
+					enterSequence_main_region_SetDate_default();
+					react(0);
+					
+					transitioned_after = 0;
+				}
+			}
+		}
+		/* If no transition was taken then execute local reactions */
+		if (transitioned_after==transitioned_before) {
+			transitioned_after = react(transitioned_before);
+		}
+		return transitioned_after;
+	}
+	
+	private long main_region_SetDate_react(long transitioned_before) {
+		long transitioned_after = transitioned_before;
+		
+		if (transitioned_after<0) {
+			if (b2) {
+				exitSequence_main_region_SetDate();
+				enterSequence_main_region_DisplayDate_default();
+				react(0);
+				
+				transitioned_after = 0;
+			} else {
+				if (b1) {
+					exitSequence_main_region_SetDate();
+					enterSequence_main_region_SetSeconds_default();
+					react(0);
+					
+					transitioned_after = 0;
+				}
 			}
 		}
 		/* If no transition was taken then execute local reactions */

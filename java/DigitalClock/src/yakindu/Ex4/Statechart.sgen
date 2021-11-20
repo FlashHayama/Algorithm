@@ -1,15 +1,15 @@
-GeneratorModel for yakindu::c {
+GeneratorModel for yakindu::java {
 
-	const PROJECT : string = "yakindu"
+	const PROJECT : string = "Ex4"
 
-	const FOLDER : string = "Ex4/src-gen"
+	const FOLDER : string = "src-gen"
 
 	statechart DigitalClock {
 
 		feature Outlet {
 			targetProject = PROJECT
 			targetFolder = FOLDER
-			libraryTargetFolder = "Ex4/src"
+			libraryTargetFolder = "src"
 		}
 	}
 }
