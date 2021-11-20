@@ -1,0 +1,16 @@
+#lang racket
+
+(require racket/trace)
+
+(define (fib x)
+  (if (= x 0)
+      0
+      (if (or (= x 1) (= x 2))
+          1
+          (+ (fib (- x 1)) (fib (- x 2))))))
+
+(trace fib)
+(fib 0)
+(fib 1)
+(fib 2)
+(fib 4)
