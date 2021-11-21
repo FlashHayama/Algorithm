@@ -1,0 +1,23 @@
+Column1;Column2;Column3;Column4;Column5
+Ajout de l'event b2;;;;
+;;;;
+Stratégie d'implémentation;Nbre de classes ajoutées;Nbre de lignes de code ajoutées;Nbre des modifications apportées au code existant;Durée de développement
+State Design Pattern;0;20;0;20min
+Programmation procédurale;0;15;0;20min
+Table State;3;25;0;30min
+;;;;
+;;;;
+Ajout des états SET_DATE; SET_HOUR; SET_SECOND;;
+;;;;
+Stratégie d'implémentation;Nbre de classes ajoutées;Nbre de lignes de code ajoutées;Nbre des modifications apportées au code existant;Durée de développement
+State Design Pattern;3;50;0;40min
+Programmation procédurale;3;40;0;40min
+Table State;9;70;0;1h
+;;;;
+;;;;
+Ajout de l'event b3;;;;
+;;;;
+Stratégie d'implémentation;Nbre de classes ajoutées;Nbre de lignes de code ajoutées;Nbre des modifications apportées au code existant;Durée de développement
+State Design Pattern;0;30;0;30min
+Programmation procédurale;0;40;0;30min
+Table State;6;50;0;1h
