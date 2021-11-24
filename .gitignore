@@ -5,6 +5,7 @@ bin
 #vscode
 .vscode
 *.zip
+.project
 
 
 # Byte-compiled / optimized / DLL files
