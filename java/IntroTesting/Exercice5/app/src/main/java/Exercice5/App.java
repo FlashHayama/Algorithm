@@ -5,27 +5,29 @@ package Exercice5;
 
 import Exercice5.statepattern.DigitalClock;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 public class App extends Application {
 
-    DigitalClock dcStatePattern = new DigitalClock();
-    GridPane gp1 = new GridPane();
+    DigitalClock dcStatePattern; 
+    HBox hb1 = new HBox();
+    VBox vb1 = new VBox();
     
-
     Text t1 = new Text("heur:minute:seconds");
 
     Button btnB1 = new Button("b1");
     Button btnB2 = new Button("b2");
     Button btnB3 = new Button("b3");
+
+    public Text getT1() { return t1; }
 
     public String getGreeting() {
         return "Hello World!";
@@ -37,35 +39,48 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        btnB1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Button b1 pressed");
-                dcStatePattern.b1();
-                dcStatePattern.display(); 
-            }
-        });
+        dcStatePattern = new DigitalClock(this);
 
-        gp1.setMinSize(640, 480);
+        btnB1.setOnAction(event -> {eventB1();});
+        btnB2.setOnAction(event -> {eventB2();});
+        btnB3.setOnAction(event -> {eventB3();});
 
-        gp1.add(btnB1, 0, 1);
-        gp1.add(btnB2, 1, 1);
-        gp1.add(btnB3, 2, 1);
-        gp1.add(t1, 0, 0);
+        ObservableList<Node> listhb = hb1.getChildren();
+        listhb.addAll(btnB1,btnB2,btnB3);
+        hb1.setSpacing(10);
 
-        Scene scene = new Scene(new StackPane(gp1));
+        ObservableList<Node> listvb = vb1.getChildren();
+        listvb.addAll(t1,hb1);
+        vb1.setSpacing(10);
+
+        Scene scene = new Scene(new StackPane(vb1));
         stage.setScene(scene);
         stage.show();
     }
 
-    
+    private void eventB3() {
+        System.out.println("Button b3 pressed");
+        dcStatePattern.b3();
+        display();
+    }
+
+    private void eventB2() {
+        System.out.println("Button b2 pressed");
+        dcStatePattern.b2();
+        display();
+    }
+
+    public void eventB1(){
+        System.out.println("Button b1 pressed");
+        dcStatePattern.b1();
+        display();
+    }
+
+    public void display(){
+        dcStatePattern.updateDisplay(this);
+    }
 
     public static void main(String[] args) {
         launch(args);
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.stop();
     }
 }

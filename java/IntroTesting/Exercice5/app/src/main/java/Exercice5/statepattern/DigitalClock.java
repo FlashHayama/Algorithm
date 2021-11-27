@@ -1,5 +1,6 @@
 package Exercice5.statepattern;
 
+import Exercice5.App;
 import Exercice5.statepattern.states.ClockState;
 import Exercice5.statepattern.states.DisplayHour;
 import Exercice5.statepattern.states.StateEnum;
@@ -29,7 +30,7 @@ public class DigitalClock {
 	/**
 	 * Constructor
 	 */
-	public DigitalClock() {
+	public DigitalClock(App app) {
 		ClockState state = new DisplayHour();
 		switchTo(state);
 		setHours(0);
@@ -38,15 +39,17 @@ public class DigitalClock {
 		setDayInMonth(1);
 		setMonth(1);
 		timeFreeze = false;
-		timeScheduler.scheduleAtFixedRate(new Runnable() {
-			@Override
-			public void run() {
-				display();
-				if (!timeFreeze)
-					increaseSeconds();
-			}
+		timeScheduler.scheduleAtFixedRate(() -> {
+			updateDisplay(app);
+			if (!timeFreeze)
+				increaseSeconds();
 		}, 1, 1, SECONDS);
 
+	}
+
+	public void updateDisplay(App app){
+		display();
+		app.getT1().setText(getHours() + ":" + getMinutes() + ":" + getSeconds());
 	}
 	
 	/**
