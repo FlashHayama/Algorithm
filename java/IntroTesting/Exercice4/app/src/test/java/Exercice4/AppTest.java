@@ -10,6 +10,7 @@ import Exercice4.statepattern.states.DisplayDate;
 import Exercice4.statepattern.states.DisplaySecond;
 import Exercice4.statepattern.states.SetDate;
 import Exercice4.statepattern.states.SetHour;
+import Exercice4.statepattern.states.SetSecond;
 import Exercice4.statepattern.states.StateEnum;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -116,5 +117,29 @@ class AppTest {
         int initialHour = dc.getHours();
         dc.b3();
         assertEquals(dc.getHours(), initialHour + 1);
+    }
+
+    @Test
+    @DisplayName("Test transition B3 for SetSecond method")
+    public void test8()
+    {
+        DigitalClock dc = new DigitalClock();
+        dc.switchTo(new SetSecond());
+        assertEquals(dc.getState(), StateEnum.SET_SECOND);
+        int initialSeconds = dc.getSeconds();
+        dc.b3();
+        assertEquals(dc.getSeconds(), initialSeconds + 1);
+    }
+
+    @Test
+    @DisplayName("Test transition B3 for SetDate method")
+    public void test9()
+    {
+        DigitalClock dc = new DigitalClock();
+        dc.switchTo(new SetDate());
+        assertEquals(dc.getState(), StateEnum.SET_DATE);
+        int initialDate = dc.getDayInMonth();
+        dc.b3();
+        assertEquals(dc.getDayInMonth(), initialDate + 1);
     }
 }
