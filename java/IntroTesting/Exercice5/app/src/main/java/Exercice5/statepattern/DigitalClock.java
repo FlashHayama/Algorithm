@@ -49,7 +49,9 @@ public class DigitalClock {
 
 	public void updateDisplay(App app){
 		display();
-		app.getT1().setText(getHours() + ":" + getMinutes() + ":" + getSeconds());
+		app.getTHour().setText(getHours() + "");
+		app.getTMin().setText(getMinutes() + "");
+		app.getTSecond().setText(getSeconds() + "");
 	}
 	
 	/**

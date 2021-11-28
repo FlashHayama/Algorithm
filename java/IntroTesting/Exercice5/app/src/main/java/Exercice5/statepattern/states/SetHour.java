@@ -48,7 +48,7 @@ public class SetHour implements ClockState {
 	 */
 	@Override
 	public void b3(DigitalClock context) {
-		context.increaseMinutes();
+		context.increaseHours();
 	}
 
 	@Override

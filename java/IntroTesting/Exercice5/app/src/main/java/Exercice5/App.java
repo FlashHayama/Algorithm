@@ -12,6 +12,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -19,15 +22,24 @@ public class App extends Application {
 
     DigitalClock dcStatePattern; 
     HBox hb1 = new HBox();
+    HBox hb2 = new HBox();
     VBox vb1 = new VBox();
     
-    Text t1 = new Text("heur:minute:seconds");
+    Text tHour = new Text("heur");
+    Text tMin = new Text("minute");
+    Text tSecond = new Text("seconde");
+    Text tPoint1 = new Text(":");
+    Text tPoint2 = new Text(":");
+
+    Text t2 = new Text("Affichage");
 
     Button btnB1 = new Button("b1");
     Button btnB2 = new Button("b2");
     Button btnB3 = new Button("b3");
 
-    public Text getT1() { return t1; }
+    public Text getTHour() { return tHour; }
+    public Text getTMin() { return tMin; }
+    public Text getTSecond() { return tSecond; }
 
     public String getGreeting() {
         return "Hello World!";
@@ -45,12 +57,21 @@ public class App extends Application {
         btnB2.setOnAction(event -> {eventB2();});
         btnB3.setOnAction(event -> {eventB3();});
 
+        tHour.setFont(Font.font("verdana", FontWeight.EXTRA_BOLD, FontPosture.REGULAR, 30));
+        tPoint1.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 30));
+        tMin.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 30));
+        tPoint2.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 30));
+        tSecond.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 30));
+
         ObservableList<Node> listhb = hb1.getChildren();
         listhb.addAll(btnB1,btnB2,btnB3);
         hb1.setSpacing(10);
 
+        ObservableList<Node> listhb2 = hb2.getChildren();
+        listhb2.addAll(tHour,tPoint1,tMin,tPoint2,tSecond);
+
         ObservableList<Node> listvb = vb1.getChildren();
-        listvb.addAll(t1,hb1);
+        listvb.addAll(hb2,hb1,t2);
         vb1.setSpacing(10);
 
         Scene scene = new Scene(new StackPane(vb1));
