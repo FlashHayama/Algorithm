@@ -31,6 +31,10 @@ public class App extends Application {
     Text tPoint1 = new Text(":");
     Text tPoint2 = new Text(":");
 
+    Text tDayOfMonth = new Text("jour");
+    Text tSlash = new Text("/");
+    Text tMonth = new Text("mois");
+
     Text t2 = new Text("Affichage");
 
     Button btnB1 = new Button("b1");
