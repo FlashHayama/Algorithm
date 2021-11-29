@@ -1,0 +1,21 @@
+#lang racket
+
+(require racket/mpair)
+(require compatibility/mlist)
+
+(define (maff l)
+  (define (recaff d f)
+    (if (mlist? f)
+        ((display d)
+        (display " ")
+        (recaff (mcdr f) (mcar f)))
+        ((display f)
+        (display " )"))
+    )
+  )
+  (display "( ")
+  (recaff (mcdr l) (mcar l))
+)
+
+(define l (mlist 'allo 'a 'u112 'i))
+(maff l)
