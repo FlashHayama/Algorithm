@@ -55,6 +55,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
+        stage.centerOnScreen();
+        stage.setHeight(1080);
+        stage.setWidth(1920);
         dcStatePattern = new DigitalClock(this);
 
         btnB1.setOnAction(event -> {eventB1();});
@@ -78,7 +81,8 @@ public class App extends Application {
         listvb.addAll(hb2,hb1,t2);
         vb1.setSpacing(10);
 
-        Scene scene = new Scene(new StackPane(vb1));
+        Scene scene = new Scene(vb1);
+
         stage.setScene(scene);
         stage.show();
     }
