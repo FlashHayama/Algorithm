@@ -1,18 +1,22 @@
 #lang racket
 
-(require racket/mpair)
-(require compatibility/mlist)
-
-(define (palyndrome lst)
+(define (palyndrom lst)
   (let*
       (
-       (l (length lst))
-       (lvec (if (odd? l) (* l 2) (- (* l 2) 1)))
-       (vec (make-vector lvec))
-       (vec2 (list->vector lst))
+       (len (length lst))
+       (vec-len (- (* 2 len) 1))
+       (vec (make-vector vec-len))
       )
-    lvec
+    (define (iter i l)
+      (if (eq? i len)
+          (void)
+          (begin
+            (vector-set! vec i (car l))
+            (vector-set! vec (- vec-len i 1) (car l))
+          )
+      )
+    )
+    (iter 0 lst)
+    vec
   )
 )
-
-(palyndrome '(r a c e))
