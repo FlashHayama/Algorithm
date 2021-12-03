@@ -13,10 +13,6 @@
   )
 )
 
-(define lst (make-list 3))
-(display lst)(newline)
-
-
 (define (addFirst l v)
   (let*
       (
@@ -28,9 +24,6 @@
     l
   )
 )
-
-(display (addFirst lst 2))(newline)
-(display (addFirst lst 1))(newline)
 
 (define (addLast l v)
   (let*
@@ -44,36 +37,87 @@
   )
 )
 
-(display (addLast lst 4))(newline)
-
 (define (first l)
-  (mcar (mcar (mcar l)))
+  (mcar l)
 )
-
-(first lst)
 
 (define (last l)
-  (mcar (mcar (mcdr l)))
+  (mcdr l)
 )
-
-(last lst)
 
 (define (value e)
   (mcar (mcar e))
 )
 
 (define (next e)
-  (void)
+  (if (last? e)
+      '()
+      (mcdr e)
+  )
 )
 
 (define (previous e)
-  (void)
+  (if (first? e)
+      '()
+      (mcdr (mcar e))
+  )
 )
 
 (define (first? e)
-  (void)
+  (if (eq? (mcdr (mcar e)) '())
+      #t
+      #f
+  )
 )
 
 (define (last? e)
-  (void)
+  (if (eq? (mcdr e) '())
+      #t
+      #f
+  )
 )
+
+(define (display-forward l)
+  (define (loop acc)
+    (if (last? acc)
+        (begin
+          (display (value acc))
+          (newline)
+        )
+        (begin
+          (display (value acc))
+          (display " -> ")
+          (loop (next acc))
+        )
+    )
+  )
+  (loop (first l))
+)
+
+(define (display-backward l)
+  (define (loop acc)
+    (if (first? acc)
+        (begin
+          (display (value acc))
+          (newline)
+        )
+        (begin
+          (display (value acc))
+          (display " <- ")
+          (loop (previous acc))
+        )
+    )
+  )
+  (loop (last l))
+)
+
+(define lst (make-list 3))
+(display lst)(newline)
+
+(display (addFirst lst 2))(newline)
+(display (addFirst lst 1))(newline)
+
+(display (addLast lst 4))(newline)
+
+(display-forward lst)
+(display-backward lst)
