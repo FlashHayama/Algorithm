@@ -1,16 +1,18 @@
 package calendar;
+
 import java.util.GregorianCalendar;
 
-public class Event implements IEvent {
+public class EventBirthday implements IEvent{
+
     private GregorianCalendar date ;
     private String name ;
     private EventType type ;
-    public Event ( EventType type , String name ,
-                   int day , int month , int year ) {
+    public EventBirthday(String name, int day, int month, int year) {
         this.date = new GregorianCalendar ( year , month - 1 , day );
         this.name = name ;
-        this.type = type ;
+        this.type = EventType.Birthday ;
     }
+
     public String getName () {
         return name ;
     }
@@ -25,4 +27,5 @@ public class Event implements IEvent {
     	String result = getType().name()+": "+getName()+" "+getDate().getTime();
     	return result;
     }
+    
 }
