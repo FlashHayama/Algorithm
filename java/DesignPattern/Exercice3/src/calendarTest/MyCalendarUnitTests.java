@@ -38,4 +38,18 @@ public class MyCalendarUnitTests{
   public void test3(){
     assertThrows(MinimalSizeException.class,()->{ cal.detach(v); });
   }
+  @Test
+  public void test4(){
+    cal.attach(new CalendarView("copy of Tom's calendar"));
+    assertThrows(MaximalSizeException.class,()->{cal.attach(new CalendarView("copy of Tom's calendar'"));});
+  }
+  @Test
+  public void test5(){
+    ArrayList<Event> lst = b.getEvents();
+    for(Event e:calList){
+      if(e.getType() == EventType.Birthday){
+        assertTrue(lst.contains(e));
+      }
+    }
+  }
 }

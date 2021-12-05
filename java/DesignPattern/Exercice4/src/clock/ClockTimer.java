@@ -1,7 +1,11 @@
 package clock;
 
+import java.util.ArrayList;
+
 public class ClockTimer {
 	private int hour, minutes, seconds, day, month, year;
+	private Displayer display = new SimpleDisplayer();
+	private ArrayList<DisplayDecorator> decorators = new ArrayList<DisplayDecorator>();
 
 	public ClockTimer(int h, int m, int s, int d, int mon, int y) {
 		this.hour = h;
@@ -10,6 +14,24 @@ public class ClockTimer {
 		this.day = d;
 		this.month = mon;
 		this.year = y;
+	}
+
+	public ClockTimer(int h, int m, int s, int d, int mon, int y, Displayer display) {
+		this.hour = h;
+		this.minutes = m;
+		this.seconds = s;
+		this.day = d;
+		this.month = mon;
+		this.year = y;
+		this.display = display;
+	}
+
+	public void setDisplayer(Displayer display) {
+		this.display = display;
+	}
+
+	public void addDecorator(DisplayDecorator decorator) {
+		this.decorators.add(decorator);
 	}
 
 	public int getHour() {
@@ -57,6 +79,6 @@ public class ClockTimer {
 		hour = reset(hour, 24, 0);
 		day = reset(day, 31, 1);
 		month = reset(month, 12, 1);
-		System.out.println("" + getHour() + ":" + getMinutes());
+		System.out.println(display.getDisplay(this));
 	}
 }
