@@ -2,13 +2,13 @@ package calendar;
 import java.util.ArrayList;
 
 public class MyCalendar extends Subject {
-    private ArrayList < Event > cal ;
+    private ArrayList < IEvent > cal ;
     private ArrayList < Observer > observers ;
     private String name ;
     public MyCalendar ( Observer o , String calendarName ){
         minsize = 1;
         maxsize = 2;
-        cal = new ArrayList < Event >();
+        cal = new ArrayList < IEvent >();
         observers = new ArrayList < Observer >();
         name = calendarName ;
         try {
@@ -20,7 +20,7 @@ public class MyCalendar extends Subject {
     public String getName () {
         return name ;
     }
-    public ArrayList < Event > getEvents () {
+    public ArrayList < IEvent > getEvents () {
         return cal ;
     }
     public void attach ( Observer o ) 

@@ -5,6 +5,6 @@ public abstract class Subject {
     // minimal number of observers to be attached
     public void attach ( Observer o ) throws MaximalSizeExecption {};
     public void detach ( Observer o ) throws MinimalSizeException {};
-    public void notifyAddedEvents ( Event e ) {};
-    public void notifyRemovedEvents ( Event e ) {};
+    public void notifyAddedEvents ( IEvent e ) {};
+    public void notifyRemovedEvents ( IEvent e ) {};
 }
