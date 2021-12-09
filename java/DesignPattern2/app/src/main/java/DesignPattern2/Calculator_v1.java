@@ -7,20 +7,10 @@ import DesignPattern2.composite.MyNumber;
 import DesignPattern2.composite.Operation;
 import DesignPattern2.composite.Plus;
 import DesignPattern2.composite.Times;
-
-/************************************/
-/* A very simple Calculator in Java */
-/* (c) Tom Mens, May 2001           */
-/************************************/
-
-// Version 1.0:
-// ***********
-// Only binary non-nested expressions are allowed.
-
-import DesignPattern2.strategy.Compute;
-import DesignPattern2.strategy.CountDepth;
-import DesignPattern2.strategy.CountNbs;
-import DesignPattern2.strategy.CountOps;
+import DesignPattern2.visitor.Compute;
+import DesignPattern2.visitor.CountDepth;
+import DesignPattern2.visitor.CountNbs;
+import DesignPattern2.visitor.CountOps;
 
 public class Calculator_v1
 {

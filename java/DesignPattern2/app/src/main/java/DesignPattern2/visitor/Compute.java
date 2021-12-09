@@ -1,24 +1,25 @@
-package DesignPattern2.strategy;
+package DesignPattern2.visitor;
 
 import DesignPattern2.composite.Expression;
 import DesignPattern2.composite.MyNumber;
 import DesignPattern2.composite.Operation;
 
-public class CountNbs implements Crossing {
+public class Compute implements Crossing {
 
     @Override
     public int execute(Expression exp) {
-        if(exp instanceof MyNumber)
-            return 1;
+        if(exp instanceof MyNumber){
+            MyNumber num = (MyNumber)exp;
+            return num.getValue();
+        }
         Operation operation = (Operation)exp;
         Expression[] exps = operation.getExps();
         int max = exps.length;
-		int result = 0; 
-		for(int i = 0; i < max; i++)
+		int result = exps[0].execute(this);
+		for(int i = 1; i < max; i++)
 		{
-			result = result + exps[i].execute(this);
+			result = operation.op(result, exps[i].execute(this));
 		}
 		return result;
     }
-    
 }

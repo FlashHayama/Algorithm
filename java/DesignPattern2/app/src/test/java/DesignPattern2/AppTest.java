@@ -12,10 +12,10 @@ import DesignPattern2.composite.MyNumber;
 import DesignPattern2.composite.Operation;
 import DesignPattern2.composite.Plus;
 import DesignPattern2.composite.Times;
-import DesignPattern2.strategy.Compute;
-import DesignPattern2.strategy.CountDepth;
-import DesignPattern2.strategy.CountNbs;
-import DesignPattern2.strategy.CountOps;
+import DesignPattern2.visitor.Compute;
+import DesignPattern2.visitor.CountDepth;
+import DesignPattern2.visitor.CountNbs;
+import DesignPattern2.visitor.CountOps;
 
 import static org.junit.jupiter.api.Assertions.*;
 

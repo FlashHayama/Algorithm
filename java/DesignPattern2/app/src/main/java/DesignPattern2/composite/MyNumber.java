@@ -1,6 +1,6 @@
 package DesignPattern2.composite;
 
-import DesignPattern2.strategy.Crossing;
+import DesignPattern2.visitor.Crossing;
 
 final public class MyNumber implements Expression
 {
