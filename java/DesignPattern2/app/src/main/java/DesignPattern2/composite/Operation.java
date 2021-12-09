@@ -1,12 +1,20 @@
 package DesignPattern2.composite;
 
-import DesignPattern2.visitor.Crossing;
+import java.util.ArrayList;
+
+import DesignPattern2.strategy.Crossing;
+import DesignPattern2.strategy.Postfixe;
+import DesignPattern2.visitor.Calcul;
 
 abstract public class Operation implements Expression
 {
 	private Expression[] exps;
+	private Crossing strategy = Postfixe.Instance();
+
 	protected String symbol;
 	protected int neutral;
+	protected ArrayList<Integer> nbs;
+	protected ArrayList<String> ops;
 
 	public /* constructor */ Operation(Expression[] exps)
 	{
@@ -18,11 +26,23 @@ abstract public class Operation implements Expression
 		return exps;
 	}
 
+	public void setStrategy(Crossing str){strategy = str;}
+
 	abstract public int op(int l, int r);
 
-	public int execute(Crossing cross)
+	public int execute(Calcul calc)
 	{
-		return cross.execute(this);
+		return calc.execute(this);
+	}
+
+	public void collectOps(Crossing cross)
+	{
+		ops = cross.collectOps(this);
+	}
+
+	public void collectNbs(Crossing cross)
+	{
+		nbs = cross.collectNbs(this);
 	}
 
 	public void print()

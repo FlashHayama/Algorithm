@@ -1,6 +1,6 @@
 package DesignPattern2.composite;
 
-import DesignPattern2.visitor.Crossing;
+import DesignPattern2.visitor.Calcul;
 
 final public class MyNumber implements Expression
 {
@@ -17,7 +17,7 @@ final public class MyNumber implements Expression
 	}
 	
 	@Override
-	public int execute(Crossing cross) {
+	public int execute(Calcul cross) {
 		return cross.execute(this);
 	}
 	

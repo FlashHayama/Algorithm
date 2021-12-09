@@ -4,7 +4,7 @@ import DesignPattern2.composite.Expression;
 import DesignPattern2.composite.MyNumber;
 import DesignPattern2.composite.Operation;
 
-public class CountDepth implements Crossing {
+public class CountDepth implements Calcul {
 
     @Override
     public int execute(Expression exp) {

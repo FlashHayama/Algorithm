@@ -2,6 +2,6 @@ package DesignPattern2.visitor;
 
 import DesignPattern2.composite.Expression;
 
-public interface Crossing {
+public interface Calcul {
     int execute(Expression exp);
 }
