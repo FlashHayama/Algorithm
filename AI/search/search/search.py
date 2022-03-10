@@ -141,7 +141,7 @@ def depthFirstSearch(problem):
                 if(child in frontier.list):
                     del frontier.list[frontier.list.index(child)]
                 frontier.push(child)
-    return None
+    return []
 
     util.raiseNotDefined()
 
@@ -166,7 +166,7 @@ def breadthFirstSearch(problem):
             child = Node.child_node(node,s)
             if child.state not in explored and child not in frontier.list:
                 frontier.push(child)
-    return None
+    return []
     util.raiseNotDefined()
 
 
@@ -190,7 +190,7 @@ def uniformCostSearch(problem):
             child = Node.child_node(node,s)
             if child.state not in explored :
                 frontier.update(child,child.path_cost)
-    return None
+    return []
     util.raiseNotDefined()
 
 
@@ -228,7 +228,7 @@ def aStarSearch(problem, heuristic=manhattanHeuristic):
             child = Node.child_node(node,s)
             if child.state not in explored :
                 frontier.update(child,child.path_cost + heuristic(child.state,problem))
-    return None
+    return []
     util.raiseNotDefined()
 
 
