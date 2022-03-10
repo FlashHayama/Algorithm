@@ -17,6 +17,7 @@ In search.py, you will implement generic search algorithms which are called by
 Pacman agents (in searchAgents.py).
 """
 
+from argparse import Action
 import util
 
 class SearchProblem:
@@ -66,9 +67,12 @@ class Node:
 
     def __init__(self):
         self.parent = None
-        self.state
+        self.state = None
         self.action = None
-        self.path_cost
+        self.path_cost = None
+
+    def getState(self):
+        return self.state
 
     def make_node(state):
         n = Node()
@@ -95,7 +99,7 @@ def tinyMazeSearch(problem):
     w = Directions.WEST
     return [s, s, w, s, w, w, s, w]
 
-def solution(node, sol=util.Stack()):
+def solution(node, sol=util.Queue()):
     if node.parent == None:
         return sol.list
     else:
@@ -118,18 +122,18 @@ def depthFirstSearch(problem):
     """
     "*** YOUR CODE HERE ***"
 
-    node = Node.make_node(problem.getStartState)
+    node = Node.make_node(problem.getStartState())
     node.path_cost = 0
     if problem.isGoalState(node.state):
-        return {node.action}
+        return [node.action]
     frontier = util.Stack()
     frontier.push(node)
     explored = []
     while not frontier.isEmpty():
         node = frontier.pop()
         explored.append(node.state)
-        for successor in problem.getSuccessors(node.state):
-            child = Node.child_node(node,successor)
+        for s in problem.getSuccessors(node.state):
+            child = Node.child_node(node,s)
             if child.state not in explored and child not in frontier.list:
                 if problem.isGoalState(child.state):
                     return solution(child)
@@ -142,6 +146,25 @@ def depthFirstSearch(problem):
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
+    
+    
+    node = Node.make_node(problem.getStartState())
+    node.path_cost = 0
+    if problem.isGoalState(node.state):
+        return [node.action]
+    frontier = util.Queue()
+    frontier.push(node)
+    explored = []
+    while not frontier.isEmpty():
+        node = frontier.pop()
+        explored.append(node.state)
+        for s in problem.getSuccessors(node.state):
+            child = Node.child_node(node,s)
+            if child.state not in explored and child not in frontier.list:
+                if problem.isGoalState(child.state):
+                    return solution(child)
+                frontier.push(child)
+    return None
     util.raiseNotDefined()
 
 
