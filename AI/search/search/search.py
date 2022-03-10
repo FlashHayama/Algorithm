@@ -83,7 +83,7 @@ class Node:
         n = Node()
         n.state = successor[0]
         n.action = successor[1]
-        n.path_cost = successor[2]
+        n.path_cost = successor[2] + parent.path_cost
         n.parent = parent
         return n
 
@@ -173,6 +173,24 @@ def breadthFirstSearch(problem):
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
+
+    node = Node.make_node(problem.getStartState())
+    node.path_cost = 0
+    frontier = util.PriorityQueue()
+    frontier.push(node,node.path_cost)
+    explored = []
+
+    while not frontier.isEmpty():
+        node = frontier.pop()
+        explored.append(node.state)
+        if problem.isGoalState(node.state):
+            return solution(node)
+
+        for s in problem.getSuccessors(node.state):
+            child = Node.child_node(node,s)
+            if child.state not in explored :
+                frontier.update(child,child.path_cost)
+    return None
     util.raiseNotDefined()
 
 
@@ -183,12 +201,34 @@ def nullHeuristic(state, problem=None):
     """
     return 0
 
+def manhattanHeuristic(position, problem, info={}):
+    "The Manhattan distance heuristic for a PositionSearchProblem"
+    xy1 = position
+    xy2 = problem.goal
+    return abs(xy1[0] - xy2[0]) + abs(xy1[1] - xy2[1])
 
-def aStarSearch(problem, heuristic=nullHeuristic):
+def aStarSearch(problem, heuristic=manhattanHeuristic):
     """
     Search the node that has the lowest combined cost and heuristic first.
     """
     "*** YOUR CODE HERE ***"
+    node = Node.make_node(problem.getStartState())
+    node.path_cost = 0
+    frontier = util.PriorityQueue()
+    frontier.push(node,node.path_cost)
+    explored = []
+
+    while not frontier.isEmpty():
+        node = frontier.pop()
+        explored.append(node.state)
+        if problem.isGoalState(node.state):
+            return solution(node)
+
+        for s in problem.getSuccessors(node.state):
+            child = Node.child_node(node,s)
+            if child.state not in explored :
+                frontier.update(child,child.path_cost + heuristic(child.state,problem))
+    return None
     util.raiseNotDefined()
 
 
