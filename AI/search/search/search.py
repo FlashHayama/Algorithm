@@ -132,11 +132,13 @@ def depthFirstSearch(problem):
     while not frontier.isEmpty():
         node = frontier.pop()
         explored.append(node.state)
+        if problem.isGoalState(node.state):
+            return solution(node)
         for s in problem.getSuccessors(node.state):
             child = Node.child_node(node,s)
-            if child.state not in explored and child not in frontier.list:
-                if problem.isGoalState(child.state):
-                    return solution(child)
+            if child.state not in explored:
+                if(child in frontier.list):
+                    del frontier.list[frontier.list.index(child)]
                 frontier.push(child)
     return None
 
