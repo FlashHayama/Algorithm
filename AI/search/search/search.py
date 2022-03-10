@@ -87,6 +87,10 @@ class Node:
         n.parent = parent
         return n
 
+    def __eq__(self, __o: object) -> bool:
+        if __o == None:
+            return False
+        return self.state == __o.state
 
 
 def tinyMazeSearch(problem):
@@ -99,12 +103,11 @@ def tinyMazeSearch(problem):
     w = Directions.WEST
     return [s, s, w, s, w, w, s, w]
 
-def solution(node, sol=util.Queue()):
+def solution(node):
     if node.parent == None:
-        return sol.list
+        return []
     else:
-        sol.push(node.action)
-        return solution(node.parent,sol)
+        return solution(node.parent) + [node.action]
 
 def depthFirstSearch(problem):
     """
@@ -124,16 +127,14 @@ def depthFirstSearch(problem):
 
     node = Node.make_node(problem.getStartState())
     node.path_cost = 0
-    if problem.isGoalState(node.state):
-        return [node.action]
     frontier = util.Stack()
     frontier.push(node)
     explored = []
     while not frontier.isEmpty():
         node = frontier.pop()
-        explored.append(node.state)
         if problem.isGoalState(node.state):
             return solution(node)
+        explored.append(node.state)
         for s in problem.getSuccessors(node.state):
             child = Node.child_node(node,s)
             if child.state not in explored:
@@ -149,22 +150,21 @@ def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
     
-    
     node = Node.make_node(problem.getStartState())
     node.path_cost = 0
-    if problem.isGoalState(node.state):
-        return [node.action]
     frontier = util.Queue()
     frontier.push(node)
     explored = []
+
     while not frontier.isEmpty():
         node = frontier.pop()
         explored.append(node.state)
+        if problem.isGoalState(node.state):
+            return solution(node)
+
         for s in problem.getSuccessors(node.state):
             child = Node.child_node(node,s)
             if child.state not in explored and child not in frontier.list:
-                if problem.isGoalState(child.state):
-                    return solution(child)
                 frontier.push(child)
     return None
     util.raiseNotDefined()
