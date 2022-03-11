@@ -34,6 +34,7 @@ description for details.
 Good luck and happy searching!
 """
 
+import math
 from game import Directions
 from game import Agent
 from game import Actions
@@ -289,7 +290,7 @@ class CornersProblem(search.SearchProblem):
         # Please add any code here which you would like to use
         # in initializing the problem
         "*** YOUR CODE HERE ***"
-        self.objectif = list(self.corners)
+        self.objectif = [False] * 4
         self.goal = self.corners[0]
 
     def getStartState(self):
@@ -298,7 +299,7 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
-        return self.startingPosition
+        return (self.startingPosition,self.objectif[:])
         util.raiseNotDefined()
 
     def isGoalState(self, state):
@@ -306,15 +307,11 @@ class CornersProblem(search.SearchProblem):
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
-        if state == self.goal:
-            del self.objectif[0]
-            if self.objectif == []:
-                return True
-            else:
-                self.goal = self.objectif[0]
-                return False
-        else:
+        pos, visited = state
+        if False in visited:
             return False
+        else:
+            return True
         util.raiseNotDefined()
 
     def getSuccessors(self, state):
@@ -329,6 +326,7 @@ class CornersProblem(search.SearchProblem):
         """
         pos, visited = state
         successors = []
+        
         for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
             # Add a successor state to the successor list if the action is legal
             # Here's a code snippet for figuring out whether a new position hits a wall:
@@ -338,11 +336,16 @@ class CornersProblem(search.SearchProblem):
             #   hitsWall = self.walls[nextx][nexty]
 
             "*** YOUR CODE HERE ***"
-            x,y = state
+            x,y = pos
             dx, dy = Actions.directionToVector(action)
             nextx, nexty = int(x + dx), int(y + dy)
             if not self.walls[nextx][nexty]:
-                nextState = (nextx, nexty)
+                nextPos = (nextx, nexty)
+                nextVisited = visited[:]
+                if nextPos in self.corners:
+                    nextVisited[self.corners.index(nextPos)] = True
+                nextState = nextPos,nextVisited
+
                 cost = 1
                 successors.append( ( nextState, action, cost) )
 
@@ -361,7 +364,7 @@ class CornersProblem(search.SearchProblem):
             x, y = int(x + dx), int(y + dy)
             if self.walls[x][y]: return 999999
         return len(actions)
-
+    
 
 def cornersHeuristic(state, problem):
     """
@@ -380,7 +383,17 @@ def cornersHeuristic(state, problem):
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
     "*** YOUR CODE HERE ***"
-    return 0 # Default to trivial solution
+    pos = state[0]
+    visited = [True] * 4
+    minPath = math.inf
+    for v in range(0,4):
+        if (visited[v]):
+            xy1 = pos
+            xy2 = corners[v]
+            distance = abs(xy1[0] - xy2[0]) + abs(xy1[1] - xy2[1])
+            if distance < minPath: minPath = distance
+
+    return minPath
 
 class AStarCornersAgent(SearchAgent):
     "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
