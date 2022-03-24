@@ -89,6 +89,7 @@ class ReflexAgent(Agent):
         newGhostPositions = successorGameState.getGhostPositions()
         x,y = newPos
         min = math.inf
+
         for ghostPosition in newGhostPositions:
           d = manhattanDistance(newPos,ghostPosition)
           if d < min:
@@ -100,11 +101,14 @@ class ReflexAgent(Agent):
               score += 50/min
             else:
               score -= 50/min
-        for f in [(-1,0),(0,1),(1,0),(0,-1)]:
-          p = newPos + f
-          if p[0] < newFood.width and p[1] < newFood.height:
-            if newFood[p[0]][p[1]]:
-              score += 10
+        min = math.inf
+        for x in newFood:
+          for y in newFood[x]:
+            if newFood[x][y]:
+              d = manhattanDistance(newPos,(x,y))
+              if d < min:
+                min = d
+        score += 50/min
         return score
 
 
