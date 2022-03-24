@@ -93,8 +93,10 @@ class ReflexAgent(Agent):
           d = manhattanDistance(newPos,ghostPosition)
           if d < min:
             min = d
-        score -= 100/min
-        g = Grid()
+          if newScaredTimes[newGhostPositions.index(ghostPosition)] > 0:
+            score += 50/min
+          else:
+            score -= 50/min
         for f in [(-1,0),(0,1),(1,0),(0,-1)]:
           p = newPos + f
           if p[0] < newFood.width and p[1] < newFood.height:
