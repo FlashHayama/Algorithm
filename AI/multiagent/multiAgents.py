@@ -102,7 +102,7 @@ class ReflexAgent(Agent):
             else:
               score -= 50/min
         min = math.inf
-        for x in newFood:
+        for x in range(0,newFood.width):
           for y in newFood[x]:
             if newFood[x][y]:
               d = manhattanDistance(newPos,(x,y))
