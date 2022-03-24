@@ -101,14 +101,22 @@ class ReflexAgent(Agent):
               score += 50/min
             else:
               score -= 50/min
-        min = math.inf
-        for x in range(0,newFood.width):
-          for y in newFood[x]:
-            if newFood[x][y]:
-              d = manhattanDistance(newPos,(x,y))
-              if d < min:
-                min = d
-        score += 50/min
+        prox = False
+        for f in [(-1,0),(0,1),(1,0),(0,-1)]:
+          p = newPos + f
+          if p[0] < newFood.width and p[1] < newFood.height:
+            if newFood[p[0]][p[1]]:
+              prox = True
+              score += 50
+        if(not prox):
+          min = math.inf
+          for x in range(0,newFood.width):
+            for y in newFood[x]:
+              if newFood[x][y]:
+                d = manhattanDistance(newPos,(x,y))
+                if d < min:
+                  min = d
+          score += 50/min
         return score
 
 
