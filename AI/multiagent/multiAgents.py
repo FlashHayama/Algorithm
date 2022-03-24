@@ -83,6 +83,11 @@ class ReflexAgent(Agent):
                           for ghostState in newGhostStates]
 
         "*** YOUR CODE HERE ***"
+
+        print(newPos)
+        print(newFood)
+        print(newScaredTimes)
+
         return successorGameState.getScore()
 
 
