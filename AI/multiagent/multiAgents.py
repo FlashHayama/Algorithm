@@ -15,7 +15,7 @@
 
 import math
 from util import manhattanDistance
-from game import Directions
+from game import Directions, Grid
 import random
 import util
 
@@ -94,9 +94,10 @@ class ReflexAgent(Agent):
           if d < min:
             min = d
         score -= 100/min
+        g = Grid()
         for f in [(-1,0),(0,1),(1,0),(0,-1)]:
           p = newPos + f
-          if p[0] < len(newFood) and p[1] < len(newFood[0]):
+          if p[0] < newFood.width and p[1] < newFood.height:
             if newFood[p[0]][p[1]]:
               score += 10
         return score
