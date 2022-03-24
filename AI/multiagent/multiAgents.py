@@ -94,7 +94,9 @@ class ReflexAgent(Agent):
           if d < min:
             min = d
           if min != 0:
-            if newScaredTimes[newGhostPositions.index(ghostPosition)] > 0 or min > 10:
+            if min > 2:
+              pass
+            elif newScaredTimes[newGhostPositions.index(ghostPosition)] > 0:
               score += 50/min
             else:
               score -= 50/min
